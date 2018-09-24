@@ -2,7 +2,6 @@
 #define CHILDMANAGER_H
 
 #include "area.h"
-#include "obstaclecontroller.h"
 #include "proband.h"
 
 class ChildManager

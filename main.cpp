@@ -1,7 +1,6 @@
 #include "eventconnector.h"
 #include "evolutioncontroller.h"
 #include "scenemanager.h"
-#include "obstaclecontroller.h"
 
 #include <QApplication>
 #include <QGraphicsRectItem>
@@ -26,10 +25,8 @@ int main(int argc, char *argv[])
 
     EvolutionController *evolutionController = new EvolutionController(sceneManager);
 
-    EventConnector *eventConnector = new EventConnector();
-    eventConnector->setEvolutionController(evolutionController);
-
-    QObject::connect(sceneManager->StartButton, SIGNAL(clicked()), eventConnector, SLOT(startEvolution()));
+    EventConnector *eventConnector = new EventConnector(sceneManager, evolutionController);
+    eventConnector->connectEvents();
 
     return a.exec();
 }

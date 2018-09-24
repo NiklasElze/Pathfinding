@@ -22,19 +22,13 @@ void EvolutionController::startEvolution()
 
     generateNewPopulation(population, false);
 
-    //qDebug("Starting evolution...");
     for (int i = 0; i < GlobalConfig::NumberOfGenerations; i++)
     {
         std::string generationInfo = "Starting generation ";
         generationInfo += std::to_string(i + 1);
-        //qDebug(generationInfo.c_str());
 
         processGeneration(i + 1, population);
-
-        //qDebug("Finished current generation.");
     }
-
-    //qDebug("Finished evolution.");
 }
 
 void EvolutionController::processGeneration(int generation, vector<Proband*> *population)
@@ -61,7 +55,6 @@ void EvolutionController::processGeneration(int generation, vector<Proband*> *po
             if (showSteps)
             {
                 QCoreApplication::processEvents();
-                //std::this_thread::sleep_for(std::chrono::milliseconds(1));
             }
         }
 
@@ -92,13 +85,6 @@ void EvolutionController::processGeneration(int generation, vector<Proband*> *po
                 bestProband = population->at(i);
             }
         }
-
-        /*std::string text = "Best proband | ID: ";
-        text += std::to_string(bestProband->id);
-        text += " | Steps: ";
-        text += std::to_string(bestProband->stepsToTarget);
-
-        qDebug(text.c_str());*/
     }
     catch (const std::exception& e)
     {
@@ -118,14 +104,14 @@ void EvolutionController::createNewGeneration(vector<Proband*> *bestProbands, ve
         newGeneration->at(i) = top10Proband;
     }
 
-    for (int i = 10; i < 100; i++)
+    for (int i = GlobalConfig::NumberOfBestProbands; i < GlobalConfig::PopulationSize; i++)
     {
-        int fatherIndex = rand() % 10;
-        int motherIndex = rand() % 10;
+        int fatherIndex = rand() % GlobalConfig::NumberOfBestProbands;
+        int motherIndex = rand() % GlobalConfig::NumberOfBestProbands;
 
         while (motherIndex == fatherIndex)
         {
-            motherIndex = rand() % 10;
+            motherIndex = rand() % GlobalConfig::NumberOfBestProbands;
         }
 
         Proband *mother = newGeneration->at(motherIndex);
@@ -160,7 +146,6 @@ void EvolutionController::findClosestProband(vector<Proband*> *closestProbands, 
 {
     for (int i = 0; i < GlobalConfig::PopulationSize; i++)
     {
-        //qDebug(to_string(i).c_str());
         Proband *proband = population->at(i);
 
         setClosest(proband, 0, closestProbands);
@@ -174,9 +159,6 @@ void EvolutionController::findClosestProband(vector<Proband*> *closestProbands, 
 
 void EvolutionController::setClosest(Proband *proband, int lastIndex, vector<Proband*> *closestProbands)
 {
-    /*string text = "lastIndex: ";
-    text += to_string(lastIndex).c_str();
-    qDebug(text.c_str());*/
     if (lastIndex >= GlobalConfig::NumberOfBestProbands)
     {
         return;
@@ -214,46 +196,14 @@ void EvolutionController::calculateDistance(Proband *proband)
     int targetX = m_SceneManager->ProbandTarget->getTargetX();
     int targetY = m_SceneManager->ProbandTarget->getTargetY();
 
-    /*std::string x1 = "Target X: ";
-    x1 += std::to_string(targetX1);
-    x1 += " | X2: ";
-    x1 += std::to_string(targetX2);
-
-    qDebug(x1.c_str());
-
-    std::string y1 = "Target Y: ";
-    y1 += std::to_string(targetY1);
-    y1 += " | Y2: ";
-    y1 += std::to_string(targetY2);
-
-    qDebug(y1.c_str());*/
-
     int probandX = proband->x() + proband->boundingRect().x();
     int probandY = proband->y() + proband->boundingRect().y();
-
-    /*std::string text = "Proband x: ";
-    text += std::to_string(probandX);
-    qDebug(text.c_str());
-
-    text = "Proband y: ";
-    text += std::to_string(probandY);
-    qDebug(text.c_str());*/
 
     int distanceX = 0;
     int distanceY = 0;
 
     distanceX = std::abs(targetX - probandX);
     distanceY = std::abs(targetY - probandY);
-
-   /* std::string distanceText = "Distance X: ";
-    distanceText += std::to_string(distanceX);
-
-    qDebug(distanceText.c_str());
-
-    distanceText = "Distance Y: ";
-    distanceText += std::to_string(distanceY);
-
-    qDebug(distanceText.c_str());*/
 
     proband->setDistance(distanceX + distanceY);
 }

@@ -36,11 +36,7 @@ SOURCES += \
     evolutioncontroller.cpp \
     globalconfig.cpp \
     childmanager.cpp \
-    eventconnector.cpp \
-    obstaclecontroller.cpp \
-    obstacle.cpp \
-    proxyservice.cpp \
-    proxy.cpp
+    eventconnector.cpp
 
 HEADERS += \
     target.h \
@@ -54,11 +50,7 @@ HEADERS += \
     evolutioncontroller.h \
     globalconfig.h \
     childmanager.h \
-    eventconnector.h \
-    obstaclecontroller.h \
-    obstacle.h \
-    proxyservice.h \
-    proxy.h
+    eventconnector.h
 
 FORMS +=
 

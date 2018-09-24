@@ -8,6 +8,8 @@
 #include "target.h"
 
 #include <QGraphicsScene>
+#include <QTextEdit>
+#include <QCheckBox>
 
 class SceneManager
 {
@@ -18,6 +20,13 @@ public:
     Area* ProbandArea;
     Target* ProbandTarget;
     PushButton* StartButton;
+    QTextEdit* PopulationTextBox;
+    QTextEdit* GenerationsTextBox;
+    QTextEdit* ProbandsTextBox;
+    QTextEdit* StepsTextBox;
+    QTextEdit* MutationChanceTextBox;
+    QCheckBox* ShowStepsCheckBox;
+    QCheckBox* ShowGenResultCheckBox;
     void createUi();
 };
 
