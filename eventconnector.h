@@ -3,18 +3,18 @@
 
 #include "evolutioncontroller.h"
 
-
-
 class EventConnector : public QObject{
     Q_OBJECT
 
 private:
     EvolutionController *m_EvolutionController;
-public slots:
+    SceneManager *m_SceneManager;
+private slots:
     void startEvolution();
+    void checkMaxLength();
 public:
-    EventConnector();
-    void setEvolutionController(EvolutionController *evolutionController);
+    EventConnector(SceneManager *sceneManager, EvolutionController *evolutionController);
+    void connectEvents();
 };
 
 #endif // EVENTCONNECTOR_H
